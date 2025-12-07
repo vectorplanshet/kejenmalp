@@ -33,6 +33,18 @@
     width: 100%;
     height: 100%;
 }
+/* ВЕРХНЯЯ ПОЛОСА */
+#map::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 25px;
+  background: #000;
+  z-index: 1500;
+  pointer-events: none;
+}
 #topbar {
     position: absolute;
     top: 0;
@@ -55,9 +67,11 @@
 .leaflet-control-layers {
   z-index: 2000;
   position: relative;
-  zoom: 0.8;
+  zoom: 0.8; /* 0.667 × 1.2 */
   transform-origin: top left;
+  top: 25px;
 }
+
 
 .modal {
     display: none;
@@ -598,18 +612,21 @@ body {
     width: 18px;                /* 11 * 1.6 */
     height: 18px;
 }
+:root {
+  --safe-top: 25px;
+  --safe-bottom: 50px;
+}
 
-/* Сообщение */
 #warning-message {
     position: fixed;
-    top: 0;
+    top: calc(var(--safe-top) + 0px);
     width: 100%;
-    height: 20px;               /* 12.5 * 1.6 */
+    height: 20px;
     background-color: rgba(0, 0, 0, 0.8);
     color: rgb(255, 0, 68);
     text-align: center;
-    padding: 4px;               /* 2.5 * 1.6 */
-    font-size: 11px;            /* 7 * 1.6 */
+    padding: 4px;
+    font-size: 11.2px;
     z-index: 9999;
 }
 
@@ -1606,119 +1623,104 @@ if (document.readyState === "loading") {
 }
 
 // ==== Верхнее меню ====
+// ==== Верхнее меню ====
 function createTopMenu(marker) {
     if (typeof deleteMode !== 'undefined' && deleteMode) return;
     if (document.getElementById('top-menu-' + objectId)) return;
 
+    // ✅ берём safe-top ИЗ CSS
+    const SAFE_TOP = parseInt(
+        getComputedStyle(document.documentElement)
+            .getPropertyValue('--safe-top')
+    ) || 0;
+
     const menu = document.createElement('div');
     menu.id = 'top-menu-' + objectId;
 
- // считаем, сколько уже есть панелей
-const existingMenus = document.querySelectorAll('[id^="top-menu-"]').length;
-// отступ для новой панели (уменьшил зазор)
-const offset = 18 + existingMenus * 36; // (15 * 1.2, 30 * 1.2)
+    // считаем, сколько уже есть панелей
+    const existingMenus =
+        document.querySelectorAll('[id^="top-menu-"]').length;
 
-Object.assign(menu.style, {
-    position: 'fixed',
-    top: offset + 'px',
-    left: '0',
-    width: '100%',
-    height: '36px', // 30 * 1.2
-    background: 'rgba(0, 0, 0, 0.4)',
-    color: '#fff',
-    fontFamily: 'Consolas, monospace',
-    fontSize: '15.6px', // 13 * 1.2
-    zIndex: '9999',
-    borderBottom: '1px solid rgba(255,255,255,0.15)',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: '0 9.6px', // 8 * 1.2
-    boxShadow: 'none',
-    transition: 'none'
-});
+    // ✅ корректный offset с учётом чёрной полосы
+    const offset = SAFE_TOP + 18 + existingMenus * 36;
 
-// === Текст ===
-const row = document.createElement('div');
-Object.assign(row.style, {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(6, 1fr)',
-    alignItems: 'center',
-    width: 'calc(100% - 144px)', // 120 * 1.2
-    textAlign: 'center',
-    letterSpacing: '0.36px', // 0.3 * 1.2
-    columnGap: '14.4px', // 12 * 1.2
-    paddingRight: '144px' // 120 * 1.2
-});
+    Object.assign(menu.style, {
+        position: 'fixed',
+        top: offset + 'px',
+        left: '0',
+        width: '100%',
+        height: '36px',
+        background: 'rgba(0, 0, 0, 0.4)',
+        color: '#fff',
+        fontFamily: 'Consolas, monospace',
+        fontSize: '15.6px',
+        zIndex: '9999',
+        borderBottom: '1px solid rgba(255,255,255,0.15)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '0 9.6px',
+        boxShadow: 'none',
+        transition: 'none'
+    });
 
-row.innerHTML = `
-    <div>${objectId}р</div>
-    <div>A0</div>
-    <div>D0</div>
-    <div>H0.0</div>
-    <div>V${speed}</div>
-    <div>1</div>
-`;
+    /* === ТЕКСТ === */
+    const row = document.createElement('div');
+    Object.assign(row.style, {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(6, 1fr)',
+        alignItems: 'center',
+        width: 'calc(100% - 144px)',
+        textAlign: 'center',
+        letterSpacing: '0.36px',
+        columnGap: '14.4px',
+        paddingRight: '144px'
+    });
 
-// === Кнопки ===
-const icons = document.createElement('div');
-Object.assign(icons.style, {
-    position: 'absolute',
-    right: '9.6px', // 8 * 1.2
-    display: 'flex',
-    gap: '14.4px' // 12 * 1.2
-});
+    row.innerHTML = `
+        <div>${objectId}р</div>
+        <div>A0</div>
+        <div>D0</div>
+        <div>H0.0</div>
+        <div>V${speed}</div>
+        <div>1</div>
+    `;
 
-icons.innerHTML = `
-    <button id="changeCoordsBtn-${objectId}" title="Изменить маршрут" style="
-        width:26.4px;height:26.4px; /* 22 * 1.2 */
-        border:1px solid rgba(255,255,255,0.25);
-        background: rgb(101, 101, 101);
-        border-radius:2.4px; /* 2 * 1.2 */
-        cursor:pointer;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        padding:0;
-    ">
-        <img src="reload.png" alt="reload" style="width:16.8px;height:16.8px;"> <!-- 14 * 1.2 -->
-    </button>
+    /* === КНОПКИ === */
+    const icons = document.createElement('div');
+    Object.assign(icons.style, {
+        position: 'absolute',
+        right: '9.6px',
+        display: 'flex',
+        gap: '14.4px'
+    });
 
-    <button id="zelenySamBtn-${objectId}" title="Самолёт" style="
-        width:26.4px;height:26.4px;
-        border:1px solid rgba(255,255,255,0.25);
-        background: rgb(101, 101, 101);
-        border-radius:2.4px;
-        cursor:default;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        padding:0;
-    ">
-        <img src="zelenysam.png" alt="plane" style="width:18px;height:18px;"> <!-- 15 * 1.2 -->
-    </button>
+    icons.innerHTML = `
+        <button id="changeCoordsBtn-${objectId}" title="Изменить маршрут"
+            style="width:26.4px;height:26.4px;border:1px solid rgba(255,255,255,0.25);
+                   background:rgb(101, 101, 101);border-radius:2.4px;
+                   display:flex;align-items:center;justify-content:center;padding:0;">
+            <img src="reload.png" style="width:16.8px;height:16.8px;">
+        </button>
 
-    <button id="closeTopMenu-${objectId}" title="Закрыть" style="
-        width:26.4px;height:26.4px;
-        border:1px solid rgba(255,255,255,0.25);
-        background: rgb(101, 101, 101);
-        border-radius:2.4px;
-        cursor:pointer;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        padding:0;
-        font-size:14.4px; /* 12 * 1.2 */
-        color:#222;
-    ">
-        <i class="fas fa-trash-alt"></i>
-    </button>
-`;
+        <button id="zelenySamBtn-${objectId}" title="Самолёт"
+            style="width:26.4px;height:26.4px;border:1px solid rgba(255,255,255,0.25);
+                   background:rgb(101, 101, 101);border-radius:2.4px;
+                   display:flex;align-items:center;justify-content:center;padding:0;">
+            <img src="zelenysam.png" style="width:18px;height:18px;">
+        </button>
+
+        <button id="closeTopMenu-${objectId}" title="Закрыть"
+            style="width:26.4px;height:26.4px;border:1px solid rgba(255,255,255,0.25);
+                   background:rgb(101, 101, 101);border-radius:2.4px;
+                   display:flex;align-items:center;justify-content:center;padding:0;">
+                           <i class="fas fa-trash-alt"></i>
+        </button>
+    `;
 
     menu.appendChild(row);
     menu.appendChild(icons);
     document.body.appendChild(menu);
-
     // обновлено — линия теперь исчезает при закрытии меню
     document.getElementById(`closeTopMenu-${objectId}`).onclick = () => {
         // вернуть иконку в обычный вид, если была раскрыта
@@ -1750,12 +1752,12 @@ if (marker._expanded) {
         marker.isExpanded = false;
     }
 
-    // обновить позиции остальных меню
-    const allMenus = document.querySelectorAll('[id^="top-menu-"]');
-    allMenus.forEach((m, i) => {
-        m.style.top = 18 + i * 36 + 'px';
-    });
-};
+        // ✅ перерасчёт всех меню С УЧЁТОМ SAFE-TOP
+        const allMenus = document.querySelectorAll('[id^="top-menu-"]');
+        allMenus.forEach((m, i) => {
+            m.style.top = (SAFE_TOP + 18 + i * 36) + 'px';
+        });
+    };
 
     document.getElementById(`changeCoordsBtn-${objectId}`).onclick = () => {
         openCoordsModal((coordsText) => {

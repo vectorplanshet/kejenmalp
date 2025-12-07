@@ -23,11 +23,16 @@
 ></script>
     <style>
         /* General Map Styles */
-#map {
-  position: relative;
-  height: 100vh;
-}
+        #map {
+            height: 100vh;
+        }
 
+        html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
 /* ВЕРХНЯЯ ПОЛОСА */
 #map::before {
   content: "";
@@ -39,28 +44,6 @@
   background: #000;
   z-index: 1500;
   pointer-events: none;
-}
-
-/* НИЖНЯЯ ПОЛОСА */
-#map::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 49px;
-  background: #000;
-  z-index: 1500;
-  pointer-events: none;
-}
-
-
-        html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-
 }
 #topbar {
     position: absolute;
@@ -91,177 +74,236 @@
 
 
 .modal {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.95);
-  background: #252b36;
-  padding: 16px 19.2px; /* 13.3×1.2, 16×1.2 */
-  border-radius: 11.2px; /* 9.3×1.2 */
-  z-index: 1001;
-  max-width: 288px; /* 240×1.2 */
-  width: 90%;
-  transition: all 0.35s ease;
-  color: #f0f0f0;
-  font-family: "Segoe UI", sans-serif;
-  font-size: 11.2px; /* 9.3×1.2 */
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.95);
+    background: #252b36;
+    padding: 16px 19px;
+    border-radius: 11px;
+    z-index: 1001;
+    max-width: 288px;
+    width: 90%;
+    transition: all 0.35s ease;
+    color: #f0f0f0;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 11.2px;
 }
 
 .modal h2 {
-  font-size: 17.6px; /* 14.7×1.2 */
-  color: #ffffff;
-  margin-bottom: 12.8px; /* 10.7×1.2 */
-  text-align: center;
+    font-size: 17.6px;
+    color: #ffffff;
+    margin-bottom: 12.8px;
+    text-align: center;
 }
 
 input[type="text"] {
-  width: 100%;
-  padding: 6.4px 8px; /* 5.3×1.2, 6.7×1.2 */
-  font-size: 11.2px; /* 9.3×1.2 */
-  background-color: #1e232c;
-  color: #ffffff;
-  border-radius: 6.4px; /* 5.3×1.2 */
-  border: 1.6px solid #3a4152; /* 1.3×1.2 */
+    width: 100%;
+    padding: 6.4px 8px;
+    font-size: 11.2px;
+    background-color: #1e232c;
+    color: #ffffff;
+    border-radius: 6.4px;
+    border: 1px solid #3a4152;
+}
+
+input[type="text"]:focus {
+    border-color: #4a90e2;
+    background-color: #252b36;
+    outline: none;
 }
 
 .modal-button {
-  width: 100%;
-  padding: 9.6px; /* 8×1.2 */
-  font-size: 12px; /* 10×1.2 */
-  margin-top: 16px; /* 13.3×1.2 */
-  background-color: #4674dc;
-  color: white;
-  border: none;
-  border-radius: 6.4px; /* 5.3×1.2 */
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.modal-button:hover {
-  background-color: #6088e7;
-}
-
-.modal-button:focus {
-  outline: none;
+    width: 100%;
+    padding: 9.6px;
+    font-size: 12px;
+    margin-top: 16px;
+    background-color: #4674dc;
+    color: white;
+    border: none;
+    border-radius: 6.4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .modal-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(21, 24, 30, 0.85);
-  z-index: 1000;
-  display: none;
-  backdrop-filter: blur(6.4px); /* 5.3×1.2 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(21, 24, 30, 0.85);
+    z-index: 1000;
+    display: none;
+    backdrop-filter: blur(4px);
 }
 
 .modal.show {
-  display: block;
-  transform: translate(-50%, -50%) scale(1);
+    display: block;
+    transform: translate(-50%, -50%) scale(1);
 }
 
-/* --- map filter --- */
 :root {
-  --map-tiles-filter: brightness(0.6) invert(1) contrast(3)
-    hue-rotate(200deg) saturate(0.5) brightness(0.7) grayscale(3);
+    --map-tiles-filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.5) brightness(0.7) grayscale(3);
 }
 
-.map-tiles {
-  filter: var(--map-tiles-filter, none);
+@media (prefers-color-scheme: dark) {
+    .map-tiles {
+        filter: var(--map-tiles-filter, none);
+    }
 }
 
-/* --- text styles --- */
-.shifted-info-container {
-  margin-left: 2.5px; /* 2.1×1.2 */
-}
-.shifted-info-containerr {
-  margin-right: 12px;
+.modal-button:hover {
+    background-color: #6088e7;
 }
 
-.red-id,
-.blue-id {
-  color: #000000;
+.modal-button:focus {
+    outline: none;
 }
 
+        /* Сдвигаем контейнер вправо для нужных объектов */
+        .shifted-info-container {
+            margin-left: 2.1px; /* Сдвиг на 20px вправо, можно менять значение */
+        }
+        .shifted-info-containerr {
+            margin-right: 10px;
+        }
+    
+        .red-id {
+            color: #dd0347;
+        }
+        .blue-id {
+            color: #2375D8; /* Синий цвет для текста */
+        }
+
+        /* Стили для текста в зависимости от цвета */
 .red-id .label-container,
 .red-id .r-container,
-.red-id .rls-container,
-.red-id .icon-container,
+.red-id .rls-container, 
+.red-id .icon-container {
+    color: #dd0347;
+}
+
 .blue-id .label-container,
 .blue-id .r-container,
 .blue-id .rls-container,
 .blue-id .icon-container {
-  color: #000000;
+        color: #2375D8; /* Синий цвет для текста */
 }
-
-.shifted-id-x-101 {
-  margin-left: 38.4px; /* 32×1.2 */
+      .shifted-id-x-101 {
+    margin-left: 32px; /* 20 * 1.6 */
 }
 .shifted-id {
-  margin-left: 28.8px; /* 24×1.2 */
+    margin-left: 24px; /* 15 * 1.6 */
 }
 .shifted-id-grumble,
 .shifted-id-kinzhal {
-  margin-left: 48px; /* 40×1.2 */
+    margin-left: 40px; /* 25 * 1.6 */
 }
 
-/* --- info container --- */
 .info-container {
-  line-height: 10.8px; /* 9×1.2 */
-  display: inline-block;
-  position: relative;
+    line-height: 14px; /* 9 * 1.6 */
 }
-
-
 .iconname {
-  line-height: 9.6px; /* 8×1.2 */
+    line-height: 8px; /* 5 * 1.6 */
 }
 .info-container1 {
-  line-height: 13.2px; /* 11×1.2 */
+    line-height: 11px; /* 7 * 1.6 */
 }
-
 .info-container {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2px; /* 1.7×1.2 */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+
+    padding: 5 40px 5 40px; /* ← добавь px после 5 */
+    min-width: 75px;
+    height: 11px;
+    line-height: 0.8;
+
+    border-style: solid;
+    border-width: 1px;
+    border-top-color: rgba(0,0,0,0.95);
+    border-left-color: rgba(0,0,0,0.95);
+    border-right-color: rgba(0,0,0,0.95);
+    border-bottom-color: #dcdcdc;
+    box-sizing: border-box;
+
+    /* 👇 вот эти две магические строки */
+    contain: layout paint;
+    will-change: transform;
+}
+.info-container.expanded {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    padding: 3px 5px;
+    height: auto !important;
+    min-width: auto;
+    line-height: 1;
 }
 
-/* --- text containers --- */
-.label-container,
-.r-container,
-.rls1-container,
-.rls-container,
-.label1-container,
-.r1-container {
-  font-size: 10px; /* 8.6×1.2 */
-  font-weight: 600;
-  font-family: "Roboto", sans-serif;
-  -webkit-text-stroke-color: black;
+.label-container {
+    font-size: 10.4px; /* 6.5 * 1.6 */
+    font-weight: 800;
+    font-family: 'Roboto', sans-serif;
 }
 
-.rls1-container,
+.r-container {
+    font-size: 10.4px;
+    font-weight: 800;
+    font-family: 'Roboto', sans-serif;
+}
+
+.rls1-container {
+    font-size: 10.4px;
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-weight: 600;
+    color: #333333;
+}
+
 .rls-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+    font-size: 10.4px;
+    display: flex;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 800;
+    flex-direction: column;
+    justify-content: center;
+    color: #333333;
 }
 
-/* Delete Button */
+.label1-container {
+    font-size: 10.4px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    color: #333333;
+}
+
+.r1-container {
+    font-size: 10.4px;
+    font-weight: 600;
+    font-family: 'Roboto', sans-serif;
+    color: #333333;
+}
+
 #deleteButton {
-    width: 29.5px;          /* 24.6 × 1.2 */
-    height: 25.6px;         /* 21.3 × 1.2 */
-    border-radius: 1.6px;   /* 1.3 × 1.2 */
-    background-color: rgb(223, 223, 223);
+    width: 29.6px;            /* 18.5 * 1.6 */
+    height: 25.6px;           /* 16 * 1.6 */
+    border-radius: 1.6px;     /* 1 * 1.6 */
+    background-color: rgb(101, 101, 101);
     color: rgb(130, 130, 130);
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 0;
-    font-size: 11.2px;      /* 9.31 × 1.2 */
+    font-size: 12.8px;        /* 8 * 1.6 */
+    box-shadow: 0 0.8px 3.2px rgba(0,0,0,0.3); /* (0.5 * 1.6, 2 * 1.6) */
     border: none;
     cursor: pointer;
 }
@@ -269,72 +311,79 @@ input[type="text"] {
 /* Smooth Transition for Modals */  
 .modal.show {
     display: block;
-    animation: fadeIn 0.36s ease-out; /* немного дольше для плавности */
-}
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    animation: fadeIn 0.3s ease-out;
 }
 
-/* Иконки */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 .icon-container {
     display: flex;
     align-items: center;
-    gap: 15px;              /* 20 × 1.2 */
-    font-size: 8.4px;       /* 7 × 1.2 */
+    gap: 16px;              /* 10 * 1.6 */
+    font-size: 11.2px;      /* 7 * 1.6 */
     position: absolute;
     white-space: nowrap;
 }
+
 .icon-container .icon {
-    width: 28.8px;          /* 24 × 1.2 */
-    height: 28.8px;         /* 24 × 1.2 */
+    width: 28.8px;          /* 19 * 1.6 */
+    height: 28.8px;
     object-fit: cover;
     display: block;
 }
+
 .icon-container1 {
     display: flex;
     align-items: center;
-    gap: 7.8px;             /* 6.5 × 1.2 */
-    font-size: 8.4px;       /* 7 × 1.2 */
+    gap: 10.4px;            /* 6.5 * 1.6 */
+    font-size: 11.2px;      /* 7 * 1.6 */
     position: absolute;
     white-space: nowrap;
 }
+
 .icon-container1 .icon {
-    width: 28.8px;
-    height: 28.8px;
+    width: 30.4px;          /* 19 * 1.6 */
+    height: 30.4px;
     object-fit: cover;
     display: block;
 }
 
 /* Modal Input Background for Target Coordinates */
 #targetModal {
-    padding: 16px;          /* 13.3 × 1.2 */
-    border-radius: 8px;     /* 6.7 × 1.2 */
+    padding: 16px;          /* 10 * 1.6 */
+    border-radius: 8px;     /* 5 * 1.6 */
 }
 
-/* Alert Menu */
 #alert-container {
     position: absolute;
-    top: 16px;              /* 13.3 × 1.2 */
-    left: 16px;
+    top: 16px;              /* 10 * 1.6 */
+    left: 16px;             /* 10 * 1.6 */
     z-index: 1000;
 }
 
 #alert-menu {
     background: #d2d2d2;
-    padding: 16px;
+    padding: 16px;          /* 10 * 1.6 */
     display: none;
     border: none;
-    width: 200px;           /* 166.7 × 1.2 */
-    height: 882px;          /* 735.3 × 1.2 */
+    width: 200px;           /* 125 * 1.6 */
+    height: 882.4px;        /* 551.5 * 1.6 */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #000000;
-    font-size: 11.2px;      /* 9.3 × 1.2 */
+    font-size: 11.2px;      /* 7 * 1.6 */
     transition: all 0.3s ease;
     position: absolute;
 }
+
 #alert-menu:hover {
-    box-shadow: 0px 9.6px 32px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 9.6px 32px rgba(0, 0, 0, 0.2); /* *1.6 */
 }
 
 .leaflet-control-attribution {
@@ -342,28 +391,28 @@ input[type="text"] {
 }
 
 #alert-menu h3 {
-    margin: 0 0 8px;        /* 6.7 × 1.2 */
+    margin: 0 0 8px;        /* 5 * 1.6 */
     text-align: center;
-    font-size: 12.8px;      /* 10.7 × 1.2 */
+    font-size: 12.8px;      /* 8 * 1.6 */
     color: #c4c4c4;
 }
 
 #alert-menu div {
-    margin-bottom: 4px;     /* 3.3 × 1.2 */
+    margin-bottom: 4px;     /* 2.5 * 1.6 */
 }
 
 #alert-menu input[type=checkbox] {
-    margin-right: 4px;
+    margin-right: 4px;      /* 2.5 * 1.6 */
 }
 
 button#alert-button {
-    width: 27.2px;           /* 22.7 × 1.2 */
+    width: 27.2px;          /* 17 * 1.6 */
     height: 27.2px;
     border-radius: 50%;
     background-color: #50785D;
     color: rgb(0, 0, 0);
     font-weight: bold;
-    font-size: 9.6px;        /* 8 × 1.2 */
+    font-size: 9.6px;       /* 6 * 1.6 */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -372,46 +421,53 @@ button#alert-button {
     cursor: pointer;
 }
 
-/* Overlay */
-.overlay {
+    .overlay {
     position: absolute;
     top: 0;
     left: 0;
     z-index: 9999;
     width: 100%;
     height: 100%;
+    background: rgba(255, 0, 0, 0.2);  /* Ярко-красный полупрозрачный фон для теста */
     background: url('kod.png') center/cover no-repeat;
-    pointer-events: none;
-    z-index: 2000;
-    opacity: 0.25;
-    transition: filter 0.3s ease;
+    pointer-events: none; /* Позволяет кликам проходить сквозь */
+    z-index: 2000; /* Поверх карты */
+    opacity: 0.2; /* Сделать картинку менее прозрачной */
+    transition: filter 0.3s ease; /* Плавный переход фильтра */
 }
-
-/* Leaflet Popups */
+/* Кастомизация всплывающего окна */
 .leaflet-popup-content {
     background-color: #f0f0f0;
     color: #333;
-    padding: 16px;
-    border-radius: 16px;
+    padding: 16px;              /* 10 * 1.6 */
+    border-radius: 16px;        /* 10 * 1.6 */
     font-family: 'Arial', sans-serif;
-    font-size: 22.4px;       /* 18.7 × 1.2 */
+    font-size: 22px;            /* 14 * 1.6 */
 }
+
+/* Стиль для стрелочки всплывающего окна */
 .leaflet-popup-tip {
     background-color: #f0f0f0;
 }
+
+.leaflet-popup-content-wrapper {
+    zoom: 0.5; /* 0.5 * 1.6 */
+}
+
+/* Заголовок окна */
 .leaflet-popup-content h3 {
     margin-top: 0;
-    font-size: 25.6px;       /* 21.3 × 1.2 */
+    font-size: 26px;            /* 16 * 1.6 */
     color: #555;
 }
+
 .leaflet-control.ruler {
     position: absolute;
-    right: 16px;             /* 13.3 × 1.2 */
+    right: 16px;                /* 10 * 1.6 */
     left: auto;
     top: auto;
 }
 
-/* Общие */
 * {
     margin: 0;
     padding: 0;
@@ -423,7 +479,7 @@ body {
     background: #f0f0f0;
 }
 
-/* Password Container */
+/* Экран логина */
 #passwordContainer {
     position: fixed;
     top: 0;
@@ -441,32 +497,33 @@ body {
 }
 
 #passwordContainer img {
-    width: 200px;           /* 166.7 × 1.2 */
+    width: 200px;               /* 125 * 1.6 */
     height: auto;
 }
 
 #loginInput, #passwordInput {
-    padding: 16px 12px;
-    font-size: 11.2px;
-    width: 320px;
-    height: 24px;
+    padding: 16px 12px;         /* 10px 7.5px * 1.6 */
+    font-size: 11px;            /* 7 * 1.6 */
+    width: 320px;               /* 200 * 1.6 */
+    height: 24px;               /* 15 * 1.6 */
     border: none;
-    border-radius: 3.2px;
+    border-radius: 3px;         /* 2 * 1.6 */
     background-color: #3d4558;
     color: #fff;
     text-align: left;
-    background-position: 12px center;
+    background-position: 12px center; /* 7.5 * 1.6 */
     background-repeat: no-repeat;
-    background-size: 20px;
+    background-size: 20px;      /* 12.5 * 1.6 */
 }
+
 #loginInput::placeholder,
 #passwordInput::placeholder {
     color: #b0b3b8;
 }
 
 #submitButton {
-    padding: 9.6px 32px;
-    font-size: 11.2px;
+    padding: 10px 32px;         /* 6px 20px * 1.6 */
+    font-size: 11px;            /* 7 * 1.6 */
     background-color: #4674dc;
     color: white;
     border: none;
@@ -474,39 +531,38 @@ body {
     transition: background-color 0.3s ease, transform 0.2s ease;
     border-radius: 0;
 }
+
 #submitButton:hover {
     background-color: #5c90de;
 }
+
 #submitButton:active {
     background-color: #0033cc;
     transform: scale(0.98);
 }
 
-/* Menu Icon & Controls */
 #menu-icon {
     position: absolute;
-    top: 13.6px;  /* 11.3 × 1.2 */
-    left: 16px;   /* 13.3 × 1.2 */
-    width: 136px; /* 113 × 1.2 */
-    height: 20px; /* 16.6 × 1.2 */
+    top: 14px;                  /* 8.5 * 1.6 */
+    left: 16px;                 /* 10 * 1.6 */
+    width: 136px;               /* 85 * 1.6 */
+    height: 20px;               /* 12.5 * 1.6 */
 }
 
 .inputWrapper {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    margin-bottom: 164px; /* 136 × 1.2 */
+    gap: 8px;                   /* 5 * 1.6 */
+    margin-bottom: 164px;       /* 102.5 * 1.6 */
 }
 
 .custom-menu {
     position: absolute;
-    bottom: 26px;
-    right: 16px;
+    bottom: 26px;               /* 16 * 1.6 */
+    right: 16px;                /* 10 * 1.6 */
     display: flex;
     flex-direction: column;
-    gap: 16px;
-        bottom: calc(var(--safe-bottom) + 26px);
-
+    gap: 16px;                  /* 10 * 1.6 */
     z-index: 1000;
 }
 
@@ -514,14 +570,36 @@ body {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 4.8px;  /* 4 × 1.2 */
+    gap: 5px;                   /* 3 * 1.6 */
     justify-content: flex-start;
 }
 
+/* Кнопки меню */
+.custom-button {
+    width: 30px;                /* 19 * 1.6 */
+    height: 24px;               /* 15 * 1.6 */
+    background-color: rgb(101, 101, 101);
+    border-radius: 2.5px;       /* 1.5 * 1.6 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+}
+
+.custom-button img {
+    width: 20px;                /* 12.5 * 1.6 */
+    height: 20px;
+}
+
+.custom-button.green {
+    background-color: rgb(101, 101, 101);
+}
+
+/* Левая стрелка */
 #left-arrow-button {
-    width: 30px;
-    height: 24px;
-    background-color: rgb(223, 223, 223);
+    width: 30px;                /* 19 * 1.6 */
+    height: 24px;               /* 15 * 1.6 */
+    background-color: rgb(101, 101, 101);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -529,27 +607,10 @@ body {
     border: none;
     cursor: pointer;
 }
-#left-arrow-button img {
-    width: 17.5px;
-    height: 17.5px;
-}
 
-.custom-button {
-    width: 30px;
-    height: 24px;
-    background-color: rgb(223, 223, 223);
-    border-radius: 3.2px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: default;
-}
-.custom-button img {
-    width: 20px;
-    height: 20px;
-}
-.custom-button.green {
-    background-color: rgb(223, 223, 223);
+#left-arrow-button img {
+    width: 18px;                /* 11 * 1.6 */
+    height: 18px;
 }
 :root {
   --safe-top: 25px;
@@ -569,70 +630,59 @@ body {
     z-index: 9999;
 }
 
+.hidden {
+    display: none;
+}
+
+/* Подпись */
 .menu-text {
     position: fixed;
-    right: 16px;
-    bottom: calc(var(--safe-bottom) + 6.4px);
-    font-size: 12.8px;
-    color: rgba(0, 0, 0, 0.3);
+    right: 16px;                /* 10 * 1.6 */
+    bottom: 6px;                /* 4 * 1.6 */
+    font-size: 13px;            /* 8 * 1.6 */
+    color: rgba(0,0,0,0.3);
     line-height: 1;
     text-align: right;
     margin-bottom: 0;
-    padding-top: 4.8px;
+    padding-top: 5px;           /* 3 * 1.6 */
 }
-
-
-/* Блок динамического зума */
 .dynamic-zoom {
-    position: absolute;
-    bottom: 24px;             /* 20 × 1.2 */
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-        bottom: calc(var(--safe-bottom) + 24px);
-    flex-direction: row;
-    gap: 12px;                /* 10 × 1.2 */
-    opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none;
-    z-index: 1000;
-}
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: row;
+      gap: 10px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 1000;
+    }
 
-.dynamic-zoom.show {
-    opacity: 1;
-    pointer-events: auto;
-}
+    .dynamic-zoom.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
 
 .dynamic-zoom button {
-    width: 36px;              /* 30 × 1.2 */
-    height: 36px;
-    background: white;
-    border: none;
-    cursor: pointer;
-    font-size: 42px;          /* 35 × 1.2 */
-    padding: 0;
-    margin: 0;
-    line-height: 36px;
-    text-align: center;
-    border-radius: 0;
-    box-shadow: none;
+  width: 30px;
+  height: 30px;
+  background: white;
+  border: none;
+  cursor: pointer;
+  font-size: 35px; /* уменьшен размер шрифта */
+  padding: 0;
+  margin: 0;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 0;
+  box-shadow: none;
 
-    color: black;
-    -webkit-appearance: none;
-    -webkit-tap-highlight-color: transparent;
+  color: black;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
 }
-
-/* Красная линия */
-.line {
-    position: absolute;
-    width: 33px;              /* 27.5 × 1.2 */
-    height: 0.6px;            /* 0.5 × 1.2 */
-    background-color: #dd0347;
-    top: 47%;
-    left: 9.6px;              /* 8 × 1.2 */
-    transform: rotate(-180deg);
-}
-
     </style>
 </head>
 <body>
@@ -648,60 +698,55 @@ body {
     <div id="leaflet-control-layers"></div>
     </div>
     <div class="overlay"></div>
-    <body>
-  
-
     <div id="map"></div>
-<div class="custom-menu">
-  <div class="menu-row">
-    <div style="width: 130px;"></div> <!-- 108 × 1.2 -->
-    <div class="custom-button">
-      <img src="search.png" alt="Search" />
-    </div>
+<!-- Модальное окно для отображения координат -->
+  <!-- Меню в правом нижнем углу -->
+ <div class="custom-menu">
+   <div class="menu-row">
+  <div style="width: 94px;"></div> <!-- 59 * 1.6 -->
+  <div class="custom-button">
+    <img src="reload.png" alt="Reload" />
   </div>
-
-  <div class="menu-row">
-    <div style="width: 130px;"></div>
-    <div class="custom-button">
-      <img src="signal.png" alt="Signal" />
-    </div>
+  <div class="custom-button">
+    <img src="search.png" alt="Search" />
   </div>
-
-  <div class="menu-row">
-    <div style="width: 130px;"></div>
-    <div class="custom-button">
-      <img src="ugol.png" alt="Arrow" />
-    </div>
+</div>
+<div class="menu-row">
+  <div style="width: 130px;"></div> <!-- 81 * 1.6 -->
+  <div class="custom-button">
+    <img src="signal.png" alt="Signal" />
   </div>
-
-  <div class="menu-row">
-    <div style="width: 130px;"></div>
-    <div class="custom-button">
-      <img src="pryamougol.png" alt="Layer" />
-    </div>
+</div>
+<div class="menu-row">
+  <div style="width: 130px;"></div>
+  <div class="custom-button">
+    <img src="ugol.png" alt="Arrow" />
   </div>
-
-  <div class="menu-row">
-    <div style="width: 130px;"></div>
-    <div class="custom-button green">
-      <img src="plus.png" alt="Plus" />
-    </div>
+</div>
+<div class="menu-row">
+  <div style="width: 130px;"></div>
+  <div class="custom-button">
+    <img src="pryamougol.png" alt="Layer" />
   </div>
-
-  <div class="menu-row">
-    <div style="width: 63px;"></div> <!-- 52 × 1.2 -->
-    <button id="left-arrow-button">
-      <img src="strelka.png" alt="Arrow" />
-    </button>
-    <button id="alert-button">0</button>
-    <button id="deleteButton">
-      <i class="fas fa-trash-alt"></i>
-    </button>
+</div>
+<div class="menu-row">
+  <div style="width: 130px;"></div>
+  <div class="custom-button green">
+    <img src="plus.png" alt="Plus" />
   </div>
-
-  <span class="menu-text">ver 1300 (1.3.0)</span>
+</div>
+<div class="menu-row">
+  <div style="width: 64px;"></div> <!-- 40 * 1.6 -->
+  <button id="left-arrow-button">
+    <img src="strelka.png" alt="Arrow" />
+  </button>
+  <button id="alert-button">0</button>
+  <button id="deleteButton"><i class="fas fa-trash-alt"></i></button>
 </div>
 
+      <!-- Полупрозрачный текст внутри меню -->
+  <span class="menu-text">ver 1600 (1.6.0)</span>
+</div>
 
   </div>
 
@@ -720,42 +765,96 @@ body {
         <button class="modal-button" id="targetSubmit"><i class="fas fa-check"></i> Подтвердить</button>
         <button class="modal-button modal-close" id="targetClose"><i class="fas fa-times"></i> Закрыть</button>
     </div>
-              <div class="dynamic-zoom" id="zoom-buttons">
+                  <div class="dynamic-zoom" id="zoom-buttons">
     <button id="zoom-out">-</button>
     <button id="zoom-in">+</button>
   </div>
     <div id="alert-container">
-  <div id="alert-menu">
-    <h3>Дать тревогу</h3>
-    <div><input type="checkbox" id="Сумська область"><label for="Сумська область">Сумская область</label></div>
-    <div><input type="checkbox" id="г.Київ"><label for="г.Київ">г.Киев</label></div>
-    <div><input type="checkbox" id="Харківська область"><label for="Харківська область">Харьковская область</label></div>
-    <div><input type="checkbox" id="Чернігівська область"><label for="Чернігівська область">Черниговская область</label></div>
-    <div><input type="checkbox" id="Полтавська область"><label for="Полтавська область">Полтавская область</label></div>
-    <div><input type="checkbox" id="Дніпропетровська область"><label for="Дніпропетровська область">Днепропетровская область</label></div>
-    <div><input type="checkbox" id="Київська область"><label for="Київська область">Киевская область</label></div>
-    <div><input type="checkbox" id="Житомирська область"><label for="Житомирська область">Житомирская область</label></div>
-    <div><input type="checkbox" id="Черкаська область"><label for="Черкаська область">Черкасская область</label></div>
-    <div><input type="checkbox" id="Луганська область"><label for="Луганська область">Луганская область</label></div>
-    <div><input type="checkbox" id="Донецька область"><label for="Донецька область">Донецкая область</label></div>
-    <div><input type="checkbox" id="Кіровоградська область"><label for="Кіровоградська область">Кировоградская область</label></div>
-    <div><input type="checkbox" id="Вінницька область"><label for="Вінницька область">Винницкая область</label></div>
-    <div><input type="checkbox" id="Чернівецька область"><label for="Чернівецька область">Черновицкая область</label></div>
-    <div><input type="checkbox" id="Херсонська область"><label for="Херсонська область">Херсонская область</label></div>
-    <div><input type="checkbox" id="АР Крим"><label for="АР Крим">АР Крым</label></div>
-    <div><input type="checkbox" id="Одеська область"><label for="Одеська область">Одесская область</label></div>
-    <div><input type="checkbox" id="Миколаївська область"><label for="Миколаївська область">Николаевская область</label></div>
-    <div><input type="checkbox" id="Хмельницька область"><label for="Хмельницька область">Хмельницкая область</label></div>
-    <div><input type="checkbox" id="Рівненська область"><label for="Рівненська область">Ровненская область</label></div>
-    <div><input type="checkbox" id="Тернопільська область"><label for="Тернопільська область">Тернопольская область</label></div>
-    <div><input type="checkbox" id="Івано-Франківська область"><label for="Івано-Франківська область">Ивано-Франковская область</label></div>
-    <div><input type="checkbox" id="Закарпатська область"><label for="Закарпатська область">Закарпатская область</label></div>
-    <div><input type="checkbox" id="Волинська область"><label for="Волинська область">Волынская область</label></div>
-    <div><input type="checkbox" id="Львівська область"><label for="Львівська область">Львовская область</label></div>
-    <div><input type="checkbox" id="Запорізька область"><label for="Запорізька область">Запорожская область</label></div>
-    <div><input type="checkbox" id="По всей территории"><label for="По всей территории">По всей территории</label></div>
-  </div>
-</div>
+        <div id="alert-menu">
+            <h3>Дать тревогу</h3>
+            <div>
+                <input type="checkbox" id="Сумская область"><label for="Сумская область">Сумская область</label>
+            </div>
+            <div>
+                <input type="checkbox" id="г.Киев"><label for="г.Киев">г.Киев</label>
+            </div>
+            <div>
+                <input type="checkbox" id="Харьковская область"><label for="Харьковская область">Харьковская область</label>
+            </div>
+            <div>
+                <input type="checkbox" id="Черниговская область"><label for="Черниговская область">Черниговская область</label>
+            </div>
+            <div>
+                <input type="checkbox" id="Полтавская область"><label for="Полтавская область">Полтавская область</label>
+            </div>
+            <div>
+                <input type="checkbox" id="Днепропетровская область"><label for="Днепропетровская область">Днепропетровская область</label>
+            </div>
+            <div>
+                <input type="checkbox" id="Киевская область"><label for="Киевская область">Киевская область</label>
+            </div>
+<div>
+            <input type="checkbox" id="Житомирская область"><label for="Житомирская область">Житомирская область</label>
+        </div>
+        <div>
+            <input type="checkbox" id="Черкасская область"><label for="Черкасская область">Черкасская область</label>
+        </div>
+        <div>
+            <input type="checkbox" id="Луганская область"><label for="Луганская область">Луганская область</label>
+        </div>
+        <div>
+            <input type="checkbox" id="Донецкая область"><label for="Донецкая область">Донецкая область</label>
+        </div>
+        <div>
+            <input type="checkbox" id="Кировоградская область"><label for="Кировоградская область">Кировоградская область</label>
+        </div>
+        <div>
+            <input type="checkbox" id="Винницкая область"><label for="Винницкая область">Винницкая область</label>
+        </div>
+        <div>
+            <input type="checkbox" id="Черновицкая область"><label for="Черновицкая область">Черновицкая область</label>
+        </div>
+        <div>
+            <input type="checkbox" id="Херсонская область"><label for="Херсонская область">Херсонская область</label>
+        </div>
+        <div>
+            <input type="checkbox" id="АР Крым"><label for="АР Крым">АР Крым</label>
+        </div>
+        <div>
+            <input type="checkbox" id="Одесская область"><label for="Одесская область">Одесская область</label>
+        </div>
+        <div>
+            <input type="checkbox" id="Николаевская область"><label for="Николаевская область">Николаевская область</label>
+        </div>
+        <div>
+            <input type="checkbox" id="Хмельницкая область"><label for="Хмельницкая область">Хмельницкая область</label>
+        </div>
+        <div>
+            <input type="checkbox" id="Ровненская область"><label for="Ровненская область">Ровненская область</label>
+        </div>
+        <div>
+            <input type="checkbox" id="Тернопольская область"><label for="Тернопольская область">Тернопольская область</label>
+        </div>
+        <div>
+            <input type="checkbox" id="Ивано-Франковская область"><label for="Ивано-Франковская область">Ивано-Франковская область</label>
+        </div>
+        <div>
+            <input type="checkbox" id="Закарпатская область"><label for="Закарпатская область">Закарпатская область</label>
+        </div>
+        <div>
+            <input type="checkbox" id="Волынская область"><label for="Волынская область">Волынская область</label>
+        </div>
+        <div>
+            <input type="checkbox" id="Львовская область"><label for="Львовская область">Львовская область</label>
+        </div>
+        <div>
+            <input type="checkbox" id="Запорожская область"><label for="Запорожская область">Запорожская область</label>
+        </div>
+        <div>
+            <input type="checkbox" id="По всей территории"><label for="По всей территории">По всей территории</label>
+        </div>
+
+    </div>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-measure/3.1.0/leaflet-measure.js"></script>
     <script src="https://unpkg.com/leaflet-geosearch/dist/bundle.min.js"></script>
@@ -782,10 +881,10 @@ body {
     });
         const map = L.map('map', {
             zoomControl: false,
-            zoomSnap: 0.01,
-    zoomDelta: 0.01,
-      wheelPxPerZoomLevel: 80,
-        }).setView([48.3794, 31.1656], 6);
+                        zoomSnap: 0.01,
+ zoomDelta: 0.01,
+      wheelPxPerZoomLevel: 80
+        }).setView([48.3794, 31.1656], 7);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
@@ -845,7 +944,6 @@ googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}'
 
 googleTerrain = L.tileLayer('http://{s}.google.com/vt/lyrs=p&x={x}&y={y}&z={z}',{
         maxZoom: 20,
-            className: 'map-tiles', // Класс, на который будет действовать фильтр
         subdomains:['mt0','mt1','mt2','mt3']
 });
 var OpenTopoMap = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
@@ -868,7 +966,7 @@ var Stadia_OSMBright = L.tileLayer('https://tiles.stadiamaps.com/tiles/osm_brigh
 });
 
 // Добавляем стандартную карту по умолчанию
-osmLayer.addTo(map);
+googleStreets.addTo(map);
 
 // Настройка слоев для переключения
 const baseLayers = {
@@ -888,15 +986,6 @@ const baseLayers = {
 
 // Добавляем контрол для переключения карт
 L.control.layers(baseLayers).addTo(map);
-map.on('baselayerchange', function (e) {
-    const mapContainer = document.querySelector('.leaflet-container');
-
-    if (e.name === 'OSM Gray' || e.name === 'Google Terrain') {
-        mapContainer.classList.add('dark-map');
-    } else {
-        mapContainer.classList.remove('dark-map');
-    }
-});
 
 // Функция для изменения фильтра на изображении
 function updateOverlayFilter() {
@@ -1039,7 +1128,7 @@ updateOverlayFilter();
             }
         }
 
- map.on('click', (e) => {
+        map.on('click', (e) => {
             if (deleteMode) return;
 
             const { lat, lng } = e.latlng;
@@ -1235,15 +1324,13 @@ if (speed >= 120 && speed <= 121) {
     iconUrl = window._markerIconMemory[key];       // используем сохранённый тип
     // -----------------------------------------
 
-
     
     if (iconUrl === 'litak.png') {
         const objectId3 = getNextLitakId();
         iconHtml = `
-    <div class="icon-container ${iconClass}">
-            <div class="icon-wrap">
-        <img src="${iconUrl}" class="icon" />
-                        <div class="info-container ${shiftedClass} ${shiftedClasss}" style="opacity:0;">    
+            <div class="icon-container ${iconClass}">
+                <img src="${iconUrl}" class="icon" />
+                <div class="info-container ${shiftedClass} ${shiftedClasss}">
                     <span class="label-container ${iconClass}">${objectId3}</span>
                     <span class="r-container ${iconClass}">ЛБ·</span>
                 </div>
@@ -1258,15 +1345,15 @@ if (speed >= 120 && speed <= 121) {
     } else if (iconClass === 'kr') {
         iconUrl = 'kalibr.png';
         iconClass = 'red-id';
-  iconHtml = `
-    <div class="icon-container ${iconClass}">
-      <img src="${iconUrl}" class="icon" />
-      <div class="info-container ${shiftedClass} ${shiftedClasss}">
-        <span class="label-container ${iconClass}">${objectId}р</span>
-        <span class="r-container ${iconClass}">ПП·</span>
-      </div>
-    </div>
-  `;
+        iconHtml = `
+            <div class="icon-container ${iconClass}">
+                <img src="${iconUrl}" class="icon" />
+                <div class="info-container ${shiftedClass} ${shiftedClasss}">
+                    <span class="label-container ${iconClass}">${objectId}р</span>
+                    <span class="r-container ${iconClass}">ПП·</span>
+                </div>
+            </div>
+        `;
         icon = L.divIcon({
             className: 'icon',
             html: iconHtml,
@@ -1277,11 +1364,11 @@ if (speed >= 120 && speed <= 121) {
         const objectId2 = getNextObjectIdBlue();
         iconUrl = 'zl.png';
         iconHtml = `
-        <div class="icon-container ${iconClass}">
-            <img src="${iconUrl}" class="icon" />
-            <div class="info-container ${shiftedClass} ${shiftedClasss}">
-                <span class="label-container ${iconClass}">0${objectId2}р</span>
-                <span class="r-container ${iconClass}">ЗЛ·</span>
+            <div class="icon-container ${iconClass}">
+                <img src="${iconUrl}" class="icon" />
+                <div class="info-container ${shiftedClass} ${shiftedClasss}">
+                    <span class="label-container ${iconClass}">0${objectId2}р</span>
+                    <span class="r-container ${iconClass}">ЗЛ·</span>
                 </div>
             </div>
         `;
@@ -1294,9 +1381,9 @@ if (speed >= 120 && speed <= 121) {
     } else if (iconClass === 'blue-id') {
         iconUrl = 'blue.png';
         iconHtml = `
-    <div class="icon-container ${iconClass}">
-        <img src="${iconUrl}" class="icon" />
-        <div class="info-container ${shiftedClass} ${shiftedClasss}">
+            <div class="icon-container ${iconClass}">
+                <img src="${iconUrl}" class="icon" />
+                <div class="info-container ${shiftedClass} ${shiftedClasss}">
                     <span class="label-container ${iconClass}">0${objectId2}р</span>
                     <span class="r-container ${iconClass}">СВ·</span>
                 </div>
@@ -1311,9 +1398,9 @@ if (speed >= 120 && speed <= 121) {
     } else if (iconClass === 'vertolet') {
         iconClass = 'blue-id';
         iconHtml = `
-    <div class="icon-container ${iconClass}">
-        <img src="${iconUrl}" class="icon" />
-        <div class="info-container ${shiftedClass} ${shiftedClasss}"">
+            <div class="icon-container ${iconClass}">
+                <img src="${iconUrl}" class="icon" />
+                <div class="info-container ${shiftedClass} ${shiftedClasss}">
                     <span class="label-container ${iconClass}">0${objectId2}р</span>
                     <span class="r-container ${iconClass}">СВ·</span>
                 </div>
@@ -1326,15 +1413,15 @@ if (speed >= 120 && speed <= 121) {
             iconAnchor: [14.4, 14.4],
         });
     } else if (iconClass === 'perexop') {
-    iconHtml = `
-        <div class="icon-container ${iconClass}">
-            <img src="${iconUrl}" class="icon" />
-            <div class="info-container ${shiftedClass} ${shiftedClasss}">
-                <span class="label-container ${iconClass}">0${objectId2}р</span>
-                <span class="r-container ${iconClass}">ЗЛ·</span>
+        iconHtml = `
+            <div class="icon-container ${iconClass}">
+                <img src="${iconUrl}" class="icon" />
+                <div class="info-container ${shiftedClass} ${shiftedClasss}">
+                    <span class="label-container ${iconClass}">0${objectId2}р</span>
+                    <span class="r-container ${iconClass}">ЗЛ·</span>
+                </div>
             </div>
-        </div>
-    `;
+        `;
         icon = L.divIcon({
             className: 'icon',
             html: iconHtml,
@@ -1350,16 +1437,16 @@ if (speed >= 120 && speed <= 121) {
 
         const iconName = iconTypes[iconUrl] || "Невідомий об'єкт";
         const randomNumber = Math.floor(Math.random() * 200) + 1;
-iconHtml = `
-  <div class="icon-container ${iconClass}">
-    <img src="${iconUrl}" class="icon" />
-    <div class="info-container">
-      <span class="label-container ${iconClass}">${objectId}р</span>
-      <span class="r-container ${iconClass}">ПП·</span>
-    </div>
-  </div>
-`;
 
+        iconHtml = `
+            <div class="icon-container ${iconClass}">
+                <img src="${iconUrl}" class="icon" />
+                <div class="info-container ${shiftedClass} ${shiftedClasss}">
+                    <span class="label-container ${iconClass}">${objectId}р</span>
+                    <span class="r-container ${iconClass}">ПП·</span>
+                </div>
+            </div>
+        `;
         icon = L.divIcon({
             className: 'icon',
             html: iconHtml,
@@ -1383,7 +1470,7 @@ function addSpeedCircle(marker, speed) {
 
     const latlng = marker.getLatLng();
     const circle = L.circleMarker(latlng, {
-        radius: 14.94,
+        radius: 18,
         stroke: false,
         fillColor: color,
         fillOpacity: 0.65,
@@ -1418,6 +1505,7 @@ setInterval(() => {
         el.classList.add('hidden');    // спрятать
     }
 }, 10 * 60 * 1000); // каждые 10 минут
+
 const translations = {
     "supercam": "Supercam",
     "shahed": "Shahed",
@@ -1460,7 +1548,6 @@ const translations = {
 let objectKey = iconUrl.replace('.png', '').replace(/-/g, ' ');
 let objectType = translations[objectKey] || objectKey;
 objectType = objectType.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-
 
 let currentLat = lat;
 let currentLng = lng;
@@ -1536,6 +1623,7 @@ if (document.readyState === "loading") {
 }
 
 // ==== Верхнее меню ====
+// ==== Верхнее меню ====
 function createTopMenu(marker) {
     if (typeof deleteMode !== 'undefined' && deleteMode) return;
     if (document.getElementById('top-menu-' + objectId)) return;
@@ -1610,21 +1698,21 @@ function createTopMenu(marker) {
     icons.innerHTML = `
         <button id="changeCoordsBtn-${objectId}" title="Изменить маршрут"
             style="width:26.4px;height:26.4px;border:1px solid rgba(255,255,255,0.25);
-                   background:rgb(223,223,223);border-radius:2.4px;
+                   background:rgb(101, 101, 101);border-radius:2.4px;
                    display:flex;align-items:center;justify-content:center;padding:0;">
             <img src="reload.png" style="width:16.8px;height:16.8px;">
         </button>
 
         <button id="zelenySamBtn-${objectId}" title="Самолёт"
             style="width:26.4px;height:26.4px;border:1px solid rgba(255,255,255,0.25);
-                   background:rgb(223,223,223);border-radius:2.4px;
+                   background:rgb(101, 101, 101);border-radius:2.4px;
                    display:flex;align-items:center;justify-content:center;padding:0;">
             <img src="zelenysam.png" style="width:18px;height:18px;">
         </button>
 
         <button id="closeTopMenu-${objectId}" title="Закрыть"
             style="width:26.4px;height:26.4px;border:1px solid rgba(255,255,255,0.25);
-                   background:rgb(223,223,223);border-radius:2.4px;
+                   background:rgb(101, 101, 101);border-radius:2.4px;
                    display:flex;align-items:center;justify-content:center;padding:0;">
                            <i class="fas fa-trash-alt"></i>
         </button>
@@ -1670,6 +1758,7 @@ if (marker._expanded) {
             m.style.top = (SAFE_TOP + 18 + i * 36) + 'px';
         });
     };
+
     document.getElementById(`changeCoordsBtn-${objectId}`).onclick = () => {
         openCoordsModal((coordsText) => {
             if (!coordsText) return;
@@ -1696,7 +1785,6 @@ if (marker._expanded) {
 }
 
 // ==== Клик по маркеру ====
-// Добавляем функционал линии направления
 let headingLine = null;
 
 marker.on('click', () => {
@@ -1751,7 +1839,7 @@ const objectType = ICON_TYPES[iconUrl] || "";
 
        const expandedHtml = `
 <div class="icon-container ${iconClass} ${marker._expanded ? "expanded" : ""} ${objectType ? "with-type" : ""}">
-    <div class="line"></div>
+
     <!-- БЛОК ИКОНКИ — ТОЛЬКО КАРТИНКА -->
     <div class="icon-wrap">
         <img src="${iconUrl}" class="icon" />
@@ -1765,11 +1853,11 @@ const objectType = ICON_TYPES[iconUrl] || "";
             align-items: flex-start !important;
             justify-content: flex-start !important;
 
-            padding: 0.8px 2px 0.8px 4px !important;
+            padding: 0.8px 4px 0.8px 8px !important;
             min-width: auto !important;
     height: auto !important;
     gap: 0.8px !important;                    /* 1 * 0.83 */
-    line-height: 1 !important;
+    line-height: 0.9 !important;
     contain: none !important;
              ">
 <span class="r-container ${iconClass}">${objectType}</span>
@@ -1782,7 +1870,6 @@ const objectType = ICON_TYPES[iconUrl] || "";
 
             <span class="r-container ${iconClass}">${Math.round(angle)}°</span>
 
-
         </div>
     </div>
 `;
@@ -1790,7 +1877,7 @@ const objectType = ICON_TYPES[iconUrl] || "";
 
 const expandedAnchor = [
     marker._originalAnchor[0],
-    marker._originalAnchor[1] + (objectType ? 7.5 : 3)
+    marker._originalAnchor[1] + (objectType ? 7.5 : 2.5)
 ];
 
 
@@ -1828,7 +1915,7 @@ const expandedAnchor = [
         weight: 0.8,      // тоньше
         opacity: 0.9
     }).addTo(map);
-});
+                });
 
 // ==== Функция обновления линии направления ====
 function updateHeadingLine(angleDeg) {
@@ -2028,21 +2115,36 @@ function openCoordsModal(callback) {
 }
 
 
-
 // ==== Удаление маркера без удаления линии ====
-marker.on('click', function () {
+// ==== Клик по маркеру ====
+// ==== Клик по маркеру ====
+marker.on('click', function (e) {
+    // если активен deleteMode — только удаляем, без меню
     if (deleteMode) {
+        e.originalEvent.stopPropagation(); // блокируем всплытие
+        e.originalEvent.preventDefault();  // предотвращаем другие действия
+    // 🟡 Удаляем круг
+    if (marker._speedCircle) {
+        map.removeLayer(marker._speedCircle);
+    }
         if (confirm('Удалить этот объект?')) {
             marker.remove();
             isActive = false;
             const deleteButton = document.getElementById('deleteButton');
             if (deleteButton) {
-                deleteMode = false; // сразу выходим из режима
+                deleteMode = false;
                 deleteButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
+            }
         }
-    }
-}});});});});
 
+        return; // <<< прекращаем выполнение, меню не откроется
+    }
+
+    // если не deleteMode — показываем меню
+    createTopMenu(marker);
+},)
+    
+              })},)})
 // ==== Кнопка deleteMode ====
 document.getElementById('deleteButton').onclick = function () {
     deleteMode = !deleteMode;
@@ -2069,8 +2171,6 @@ function getRlsForObject(objectId, iconUrl) {
     return rlsOptions[randomIndex];
 }
 
-let touchTimer;
-
 map.on('contextmenu', function (e) {
     const coords = `${e.latlng.lat}, ${e.latlng.lng}`;
     navigator.clipboard.writeText(coords).then(() => {
@@ -2081,9 +2181,15 @@ map.on('contextmenu', function (e) {
 });
 
 map.on('touchstart', function (e) {
-    // Запускаем таймер, чтобы определить долгий клик
-    touchTimer = setTimeout(() => {
-        const latlng = e.latlng;
+    const touches = e.originalEvent.touches;
+
+    // Проверяем, что нажато ДВА пальца
+    if (touches.length === 2) {
+        // Берём среднюю точку между пальцами
+        const x = (touches[0].clientX + touches[1].clientX) / 2;
+        const y = (touches[0].clientY + touches[1].clientY) / 2;
+
+        const latlng = map.mouseEventToLatLng({ clientX: x, clientY: y });
         const coords = `${latlng.lat}, ${latlng.lng}`;
 
         navigator.clipboard.writeText(coords).then(() => {
@@ -2091,13 +2197,7 @@ map.on('touchstart', function (e) {
         }).catch(err => {
             console.error('Ошибка копирования координат:', err);
         });
-    }, 800); // Время задержки в миллисекундах (800 мс = долгий клик)
-
-});
-
-map.on('touchend', function (e) {
-    // Если палец поднят до завершения задержки, отменяем таймер
-    clearTimeout(touchTimer);
+    }
 });
 
 fetch("front.json")
@@ -2128,153 +2228,57 @@ fetch("front.json")
   })
   .catch(error => console.error("Ошибка загрузки JSON:", error));
 
-  let polygons = {}; // активные районы
-let activeDistricts = {}; // какие районы включены
+  let polygons = {};
 let menuVisible = false;
 
-fetch('districts.geojson')
-  .then(response => response.json())
-  .then(geojsonData => {
-    const districtsByRegion = {};
-    geojsonData.features.forEach(feature => {
-      const region = feature.properties.ADMIN_1;
-      if (!districtsByRegion[region]) districtsByRegion[region] = [];
-      districtsByRegion[region].push(feature);
-    });
-// === ВСЕГДА подсвечиваем ЛУГАНСКУЮ ОБЛАСТЬ через trevoga.json ===
 fetch('trevoga.json')
-  .then(r => r.json())
-  .then(trevogaData => {
+    .then(response => response.json())
+    .then(geojsonData => {
+        let regions = {};
+        geojsonData.features.forEach(feature => {
+            let name = feature.properties.name;
+            regions[name] = feature;
+        });
 
-    trevogaData.features.forEach(feature => {
-
-      // Ищем "Луганская область" в любых свойствах
-      const props = feature.properties;
-      const isLugansk = Object.values(props).some(v => 
-        typeof v === 'string' && v.trim().toLowerCase() === 'луганская область'
-      );
-
-      if (isLugansk) {
-
-        const layer = L.geoJSON(feature, {
-          style: {
-            color: 'red',
-            fillColor: 'red',
-            fillOpacity: 0.13,
-            weight: 0.3
-          }
-        }).addTo(map);
-
-        const districtName =
-          props.ADMIN_2 ||
-          props.name ||
-          props.region ||
-          'Луганская область';
-
-        polygons[districtName] = layer;
-        activeDistricts[districtName] = true;
-      }
-    });
-  });
-
-
-    document.querySelectorAll('#alert-menu input[type=checkbox]').forEach(checkbox => {
-      const region = checkbox.id;
-
-      checkbox.addEventListener('click', async function (e) {
-        e.preventDefault(); // блокируем установку галочки
-
-        // ======== ОТДЕЛЬНО ОБРАБАТЫВАЕМ г.Київ ========
-        if (region === 'г.Київ') {
-          if (polygons['Kyiv']) {
-            // если уже включён — выключаем
-            map.removeLayer(polygons['Kyiv']);
-            delete polygons['Kyiv'];
-            checkbox.checked = false;
-            return;
-          }
-
-          // загружаем Kyiv.json
-          const kyivData = await fetch('Kyiv.json').then(r => r.json());
-          const kyivLayer = L.geoJSON(kyivData, {
-            style: {
-  color: 'red',
-  fillColor: 'red',
-  fillOpacity: 0.13,
-  weight: 0.3
-}
-
-          }).addTo(map);
-
-          polygons['Kyiv'] = kyivLayer;
-          checkbox.checked = true;
-          return; // не открываем список
-        }
-        // ==============================================
-
-        const existingList = checkbox.parentElement.querySelector('.district-list');
-        if (existingList) {
-          existingList.remove();
-          return;
-        }
-
-        if (districtsByRegion[region]) {
-          const subList = document.createElement('div');
-          subList.className = 'district-list';
-          subList.style.marginLeft = '20px';
-          subList.style.marginTop = '5px';
-
-          districtsByRegion[region].forEach(feature => {
-            const districtName = feature.properties.ADMIN_2;
-
-            const div = document.createElement('div');
-            div.innerHTML = `
-              <input type="checkbox" id="${districtName}" data-region="${region}">
-              <label for="${districtName}">${districtName}</label>
-            `;
-            subList.appendChild(div);
-
-            const districtCheckbox = div.querySelector('input');
-
-            if (activeDistricts[districtName]) {
-              districtCheckbox.checked = true;
-            }
-
-            districtCheckbox.onchange = function() {
-              const featureData = districtsByRegion[region].find(f => f.properties.ADMIN_2 === districtName);
-
-              if (districtCheckbox.checked) {
-                const layer = L.geoJSON(featureData, {
-                  style: {
-                    color: 'red',
-                    fillColor: 'red',
-                    fillOpacity: 0.13,
-                    weight: 0.15
-                  }
-                }).addTo(map);
-
-                polygons[districtName] = layer;
-                activeDistricts[districtName] = true;
-              } else {
-                if (polygons[districtName]) {
-                  map.removeLayer(polygons[districtName]);
-                  delete polygons[districtName];
+        // Автоматически активируем "Луганская область" и "А. Р Крым"
+        const autoActivateRegions = ["Луганская область"];
+        
+        document.querySelectorAll('#alert-menu input[type=checkbox]').forEach(checkbox => {
+            checkbox.onchange = function() {
+                let region = checkbox.id;
+                if (checkbox.checked && regions[region]) {
+                    let layer = L.geoJSON(regions[region], {
+                        style: { color: 'red', fillColor: 'red', fillOpacity: 0.1, weight: 0.3 }
+                    }).addTo(map);
+                    polygons[region] = layer;
+                } else if (polygons[region]) {
+                    map.removeLayer(polygons[region]);
+                    delete polygons[region];
                 }
-                delete activeDistricts[districtName];
-              }
             };
-          });
 
-          checkbox.parentElement.appendChild(subList);
-        }
-      });
+            // Автоматически ставим галочку для нужных регионов и активируем их
+            if (autoActivateRegions.includes(checkbox.id)) {
+                checkbox.checked = true;
+                checkbox.onchange();  // Вызываем onchange вручную для активированного региона
+            }
+        });
+
+        // Обработчик для чекбокса "По всей территории"
+        document.getElementById('По всей территории').onchange = function() {
+            let isChecked = this.checked;
+            document.querySelectorAll('#alert-menu input[type=checkbox]').forEach(checkbox => {
+                if (checkbox.id !== 'По всей территории') {
+                    checkbox.checked = isChecked;
+                    checkbox.onchange();  // Активируем или деактивируем регионы в зависимости от состояния
+                }
+            });
+        };
     });
-  });
 
-// кнопка "Дать тревогу"
 document.getElementById('alert-button').onclick = function() {
-  menuVisible = !menuVisible;
-  document.getElementById('alert-menu').style.display = menuVisible ? 'block' : 'none';
+    menuVisible = !menuVisible;
+    document.getElementById('alert-menu').style.display = menuVisible ? 'block' : 'none';
 };
         function getKievTime() {
     const options = {
@@ -2297,13 +2301,13 @@ function getNextObjectId() {
             <img src="${iconUrl}" class="icon" />
             <div class="info-container ${shiftedClass}">
                 <span class="label-container ${iconClass}">${objectId} ${minskTime}</span>
-                <span class="rl-container ${iconClass}">ЕПВО</span>
+                <span class="r-container ${iconClass}">ЕПВО</span>
             </div>
         </div>
     `;
     return iconHTML;
 }
-let objectIdCounterBlue = '0750';
+let objectIdCounterBlue = '0250';
 
 function getNextObjectIdBlue() {
   return objectIdCounterBlue++;
@@ -2322,6 +2326,29 @@ function getNextLitakId() {
     // Проверяем каждые 500 мс
     setInterval(updateAlertCount, 500);
     updateAlertCount();
+
+fetch('line.json')
+  .then(res => res.json())
+  .then(data => {
+    L.geoJSON(data, {
+      style: {
+        color: 'red',
+        weight: 1.5
+      }
+    }).addTo(map);
+  });
+
+fetch('okkyp.json')
+  .then(res => res.json())
+  .then(data => {
+    L.geoJSON(data, {
+      style: {
+        stroke: false,        // 🔥 отключает контур
+        fillColor: '#e6a57a',
+        fillOpacity: 0.3      // прозрачность, подбери
+      }
+    }).addTo(map);
+  });
     const zoomButtons = document.getElementById('zoom-buttons');
     let hideTimeout;
 
@@ -2338,7 +2365,21 @@ function getNextLitakId() {
 
     document.getElementById('zoom-in').onclick = () => map.zoomIn();
     document.getElementById('zoom-out').onclick = () => map.zoomOut();
+    function pointAhead(start, end, fraction) {
+  return {
+    lat: start.lat + (end.lat - start.lat) * fraction,
+    lng: start.lng + (end.lng - start.lng) * fraction
+  };
+}
+const STEP_KM = 5;
 
-    </script>
+let traveledKm = 0;
+let nextSpawnKm = STEP_KM;
+
+let guidePoint = null;
+let guideLine = null;
+
+</script>
+
 </body>
 </html>

@@ -339,8 +339,8 @@ transform: scale(0.95);
 }
 
 .icon-container .icon {
-    width: 24px;          /* 19 * 1.6 */
-    height: 24px;
+    width: 24.1px;          /* 19 * 1.6 */
+    height: 24.1px;
     object-fit: cover;
     display: block;
 }
@@ -689,6 +689,23 @@ body {
   -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
 }
+.leaflet-watermark {
+  position: absolute;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+
+  opacity: 0.3;
+  background-repeat: repeat;
+
+  /* ультра-плотно */
+  background-size: 140px 120px;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='120'%3E%3Cg transform='rotate(-41 70 60)'%3E%3Ctext x='70' y='22' text-anchor='middle' font-family='Arial' font-size='18' fill='%23000' fill-opacity='0.7'%3Eabf3044%3C/text%3E%3Ctext x='22' y='60' text-anchor='middle' font-family='Arial' font-size='18' fill='%23000' fill-opacity='0.7'%3Eabf3044%3C/text%3E%3Ctext x='118' y='60' text-anchor='middle' font-family='Arial' font-size='18' fill='%23000' fill-opacity='0.7'%3Eabf3044%3C/text%3E%3Ctext x='70' y='98' text-anchor='middle' font-family='Arial' font-size='18' fill='%23000' fill-opacity='0.7'%3Eabf3044%3C/text%3E%3C/g%3E%3C/svg%3E");
+}
+
+
+
     </style>
 </head>
 <body>
@@ -703,7 +720,6 @@ body {
     </div>
     <div id="leaflet-control-layers"></div>
     </div>
-    <div class="overlay"></div>
     <div id="map"></div>
 <!-- Модальное окно для отображения координат -->
   <!-- Меню в правом нижнем углу -->
@@ -901,7 +917,14 @@ body {
             maxZoom: 19,
         }).addTo(map);
         
-        
+              const watermark = L.DomUtil.create(
+        "div",
+        "leaflet-watermark",
+        map.getContainer()
+      );
+
+      L.DomEvent.disableClickPropagation(watermark);
+      L.DomEvent.disableScrollPropagation(watermark);
 // Обычный OSM (без фильтра)
 const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
@@ -998,22 +1021,6 @@ const baseLayers = {
 // Добавляем контрол для переключения карт
 L.control.layers(baseLayers).addTo(map);
 
-// Функция для изменения фильтра на изображении
-function updateOverlayFilter() {
-    const overlay = document.querySelector('.overlay');
-    if (map.hasLayer(darkLayer)) {
-        overlay.style.filter = 'invert(1) brightness(2)';
-    } else {
-        overlay.style.filter = 'none';
-    }
-}
-
-// При добавлении или удалении слоя темной карты
-map.on('layeradd', updateOverlayFilter);
-map.on('layerremove', updateOverlayFilter);
-
-// Если карта уже загружена, сразу применим фильтр
-updateOverlayFilter();
 
         let currentObjectId = 9500;
         let deleteMode = false;
@@ -2381,7 +2388,6 @@ fetch('okkyp.json')
   img.addEventListener('click', () => {
     layers.classList.toggle('active');
   });
-
 
 </script>
 

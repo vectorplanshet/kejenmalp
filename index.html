@@ -1357,8 +1357,8 @@ if (speed >= 120 && speed <= 121) {
                 icon = L.divIcon({
             className: 'icon',
             html: iconHtml,
-            iconSize: [28.8, 28.8],
-            iconAnchor: [14.4, 14.4],
+            iconSize: [24.1, 24.1],
+            iconAnchor: [12.05, 12.05],
         });
     } else if (iconClass === 'kr') {
         iconUrl = 'kalibr.png';
@@ -1375,8 +1375,8 @@ if (speed >= 120 && speed <= 121) {
         icon = L.divIcon({
             className: 'icon',
             html: iconHtml,
-            iconSize: [28.8, 28.8],
-            iconAnchor: [14.4, 14.4],
+            iconSize: [24.1, 24.1],
+            iconAnchor: [12.05, 12.05],
         });
     } else if (iconClass === 'zl') {
         const objectId2 = getNextObjectIdBlue();
@@ -1393,8 +1393,8 @@ if (speed >= 120 && speed <= 121) {
         icon = L.divIcon({
             className: 'icon',
             html: iconHtml,
-            iconSize: [28.8, 28.8],
-            iconAnchor: [14.4, 14.4],
+            iconSize: [24.1, 24.1],
+            iconAnchor: [12.05, 12.05],
         });
     } else if (iconClass === 'blue-id') {
         iconUrl = 'blue.png';
@@ -1410,8 +1410,8 @@ if (speed >= 120 && speed <= 121) {
         icon = L.divIcon({
             className: 'icon',
             html: iconHtml,
-            iconSize: [28.8, 28.8],
-            iconAnchor: [14.4, 14.4],
+            iconSize: [24.1, 24.1],
+            iconAnchor: [12.05, 12.05],
         });
     } else if (iconClass === 'vertolet') {
         iconClass = 'blue-id';
@@ -1427,8 +1427,8 @@ if (speed >= 120 && speed <= 121) {
         icon = L.divIcon({
             className: 'icon',
             html: iconHtml,
-            iconSize: [28.8, 28.8],
-            iconAnchor: [14.4, 14.4],
+            iconSize: [24.1, 24.1],
+            iconAnchor: [12.05, 12.05],
         });
     } else if (iconClass === 'perexop') {
         iconHtml = `
@@ -1443,8 +1443,8 @@ if (speed >= 120 && speed <= 121) {
         icon = L.divIcon({
             className: 'icon',
             html: iconHtml,
-            iconSize: [28.8, 28.8],
-            iconAnchor: [14.4, 14.4],
+            iconSize: [24.1, 24.1],
+            iconAnchor: [12.05, 12.05],
         });
     } else {
         const iconTypes = {
@@ -1468,8 +1468,8 @@ if (speed >= 120 && speed <= 121) {
         icon = L.divIcon({
             className: 'icon',
             html: iconHtml,
-            iconSize: [28.8, 28.8],
-            iconAnchor: [14.4, 14.4],
+            iconSize: [24.1, 24.1],
+            iconAnchor: [12.05, 12.05],
         });
     }
 }
@@ -1488,10 +1488,10 @@ function addSpeedCircle(marker, speed) {
 
     const latlng = marker.getLatLng();
     const circle = L.circleMarker(latlng, {
-        radius: 18,
+        radius: 16,
         stroke: false,
         fillColor: color,
-        fillOpacity: 0.65,
+        fillOpacity: 0.5,
     }).addTo(map);
 
     marker.on("move", () => {
